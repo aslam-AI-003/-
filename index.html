@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>மக்கள் குறை தீர்ப்பு மேடை | Makkal Kurai Theerpu Medai</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
+</head>
+<body>
+    <!-- Landing Screen -->
+    <div id="landing-screen" class="screen active">
+        <div class="landing-container">
+            <div class="tn-emblem">
+                <img src="asset/Seal_of_Tamil_Nadu.jpg" alt="Tamil Nadu Seal">
+            </div>
+            <h1 class="landing-title">
+                <span class="tamil">மக்கள் குறை தீர்ப்பு மேடை</span>
+                <span class="english">Makkal Kurai Theerpu Medai</span>
+            </h1>
+            <p class="landing-subtitle">
+                <span class="tamil">தமிழ்நாடு அரசு | AI-இயக்கப்படும் குறை தீர்ப்பு அமைப்பு</span>
+                <span class="english">Government of Tamil Nadu | AI-Powered Grievance Redressal System</span>
+            </p>
+            <div class="leaders-section">
+                <div class="leader-card">
+                    <img src="asset/images.jpeg" alt="CM" class="leader-photo">
+                    <div class="leader-info">
+                        <span class="leader-role" data-ta="முதல்வர்" data-en="Chief Minister">முதல்வர்</span>
+                        <span class="leader-name">திரு. C. Joseph Vijay</span>
+                    </div>
+                </div>
+                <div class="leader-card">
+                    <img src="asset/6380.jpg" alt="R. Kumar" class="leader-photo">
+                    <div class="leader-info">
+                        <span class="leader-role" data-ta="AI, IT & டிஜிட்டல் அமைச்சர்" data-en="Minister for AI, IT & Digital">AI, IT & டிஜிட்டல் அமைச்சர்</span>
+                        <span class="leader-name">திரு. R. Kumar</span>
+                    </div>
+                </div>
+            </div>
+            <div class="landing-stats">
+                <div class="stat-item">
+                    <span class="stat-number" id="stat-total">2,45,678</span>
+                    <span class="stat-label" data-ta="தீர்க்கப்பட்ட புகார்கள்" data-en="Complaints Resolved">தீர்க்கப்பட்ட புகார்கள்</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">98.2%</span>
+                    <span class="stat-label" data-ta="தீர்வு விகிதம்" data-en="Resolution Rate">தீர்வு விகிதம்</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">24 hrs</span>
+                    <span class="stat-label" data-ta="சராசரி பதில் நேரம்" data-en="Avg Response Time">சராசரி பதில் நேரம்</span>
+                </div>
+            </div>
+            <button class="btn-primary pulse-btn" onclick="openWhatsApp()">
+                <i class="fab fa-whatsapp"></i>
+                <span data-ta="WhatsApp Bot தொடங்கு" data-en="Start WhatsApp Bot">WhatsApp Bot தொடங்கு</span>
+            </button>
+            <div class="landing-actions">
+                <button class="btn-secondary" onclick="showScreen('tracking-screen')">
+                    <i class="fas fa-search"></i>
+                    <span data-ta="புகார் நிலை கண்காணி" data-en="Track Complaint">புகார் நிலை கண்காணி</span>
+                </button>
+                <button class="btn-secondary" onclick="showScreen('mla-dashboard')">
+                    <i class="fas fa-chart-bar"></i>
+                    <span data-ta="MLA / அதிகாரி Dashboard" data-en="MLA / Officer Dashboard">MLA / அதிகாரி Dashboard</span>
+                </button>
+            </div>
+            <div class="lang-toggle" onclick="toggleLanguage()">
+                <span id="lang-btn">EN / தமிழ்</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- WhatsApp Chat Screen -->
+    <div id="whatsapp-screen" class="screen">
+        <div class="whatsapp-container">
+            <div class="wa-header">
+                <button class="back-btn" onclick="goHome()">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <div class="wa-profile">
+                    <div class="wa-avatar">
+                        <img src="asset/Seal_of_Tamil_Nadu.jpg" alt="TN">
+                    </div>
+                    <div class="wa-info">
+                        <span class="wa-name">மக்கள் குறை தீர்ப்பு மேடை</span>
+                        <span class="wa-status">online</span>
+                    </div>
+                </div>
+                <div class="wa-actions">
+                    <i class="fas fa-video"></i>
+                    <i class="fas fa-phone"></i>
+                </div>
+            </div>
+
+            <div class="wa-chat" id="chat-container">
+                <div class="chat-date">Today</div>
+            </div>
+
+            <div class="wa-input-area" id="input-area" style="display:none;">
+                <div class="wa-input-container">
+                    <i class="fas fa-smile"></i>
+                    <input type="text" id="user-input" placeholder="Type a message..." onkeypress="handleKeyPress(event)">
+                    <i class="fas fa-paperclip"></i>
+                </div>
+                <button class="wa-send-btn" onclick="sendUserMessage()">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tracking Screen -->
+    <div id="tracking-screen" class="screen">
+        <div class="tracking-container">
+            <div class="screen-header">
+                <button class="back-btn" onclick="showScreen('landing-screen')">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <h2 data-ta="புகார் நிலை கண்காணிப்பு" data-en="Complaint Tracking">புகார் நிலை கண்காணிப்பு</h2>
+            </div>
+            <div class="tracking-search">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="tracking-input" placeholder="TN2024XXXXX">
+                </div>
+                <button class="btn-primary" onclick="trackComplaint()">
+                    <span data-ta="தேடு" data-en="Search">தேடு</span>
+                </button>
+            </div>
+            <div id="tracking-result"></div>
+            <div id="recent-complaints" class="recent-complaints"></div>
+        </div>
+    </div>
+
+    <!-- MLA / Officer Dashboard -->
+    <div id="mla-dashboard" class="screen">
+        <div class="dashboard-container">
+            <div class="screen-header">
+                <button class="back-btn" onclick="showScreen('landing-screen')">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <h2 data-ta="MLA / அதிகாரி Dashboard" data-en="MLA / Officer Dashboard">MLA / அதிகாரி Dashboard</h2>
+            </div>
+            
+            <div class="dashboard-tabs">
+                <button class="tab-btn active" onclick="switchDashTab('overview')">
+                    <i class="fas fa-chart-pie"></i>
+                    <span data-ta="கண்ணோட்டம்" data-en="Overview">கண்ணோட்டம்</span>
+                </button>
+                <button class="tab-btn" onclick="switchDashTab('complaints')">
+                    <i class="fas fa-list"></i>
+                    <span data-ta="புகார்கள்" data-en="Complaints">புகார்கள்</span>
+                </button>
+                <button class="tab-btn" onclick="switchDashTab('actions')">
+                    <i class="fas fa-tasks"></i>
+                    <span data-ta="நடவடிக்கை" data-en="Actions">நடவடிக்கை</span>
+                </button>
+            </div>
+
+            <!-- Overview Tab -->
+            <div id="tab-overview" class="tab-content active">
+                <div class="dashboard-summary">
+                    <div class="summary-card">
+                        <i class="fas fa-file-alt"></i>
+                        <div>
+                            <span class="summary-number" id="dash-total">1,247</span>
+                            <span class="summary-label" data-ta="மொத்த புகார்கள்" data-en="Total Complaints">மொத்த புகார்கள்</span>
+                        </div>
+                    </div>
+                    <div class="summary-card">
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <span class="summary-number" id="dash-resolved">1,089</span>
+                            <span class="summary-label" data-ta="தீர்க்கப்பட்டவை" data-en="Resolved">தீர்க்கப்பட்டவை</span>
+                        </div>
+                    </div>
+                    <div class="summary-card alert">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <div>
+                            <span class="summary-number" id="dash-pending">23</span>
+                            <span class="summary-label" data-ta="அவசர நிலுவை" data-en="Urgent Pending">அவசர நிலுவை</span>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="section-title" data-ta="தொகுதி வாரியான நிலை" data-en="Constituency-wise Status">தொகுதி வாரியான நிலை</h3>
+                
+                <div class="constituency-cards">
+                    <div class="constituency-card">
+                        <div class="card-header-row">
+                            <div>
+                                <h4>T. Nagar (Chennai)</h4>
+                                <span class="card-mla">MLA: Thiru. Ramesh Kumar</span>
+                            </div>
+                            <span class="card-badge good">94.2%</span>
+                        </div>
+                        <div class="card-stats">
+                            <div class="card-stat"><span class="card-stat-number">456</span><span class="card-stat-label" data-ta="மொத்தம்" data-en="Total">மொத்தம்</span></div>
+                            <div class="card-stat"><span class="card-stat-number good">430</span><span class="card-stat-label" data-ta="தீர்வு" data-en="Resolved">தீர்வு</span></div>
+                            <div class="card-stat"><span class="card-stat-number warning">12</span><span class="card-stat-label" data-ta="நிலுவை" data-en="Pending">நிலுவை</span></div>
+                        </div>
+                        <div class="card-departments">
+                            <span class="dept-tag">TNEB: 156</span>
+                            <span class="dept-tag">Water: 98</span>
+                            <span class="dept-tag">Roads: 112</span>
+                            <span class="dept-tag">Health: 90</span>
+                        </div>
+                        <div class="card-alert"><i class="fas fa-bell"></i><span data-ta="3 புகார்கள் 48 மணி நேரத்திற்கு மேல் நிலுவையில்" data-en="3 complaints pending > 48 hours">3 புகார்கள் 48 மணி நேரத்திற்கு மேல் நிலுவையில்</span></div>
+                    </div>
+
+                    <div class="constituency-card">
+                        <div class="card-header-row">
+                            <div>
+                                <h4>Madurai East</h4>
+                                <span class="card-mla">MLA: Thiru. Senthil Murugan</span>
+                            </div>
+                            <span class="card-badge good">91.8%</span>
+                        </div>
+                        <div class="card-stats">
+                            <div class="card-stat"><span class="card-stat-number">389</span><span class="card-stat-label" data-ta="மொத்தம்" data-en="Total">மொத்தம்</span></div>
+                            <div class="card-stat"><span class="card-stat-number good">357</span><span class="card-stat-label" data-ta="தீர்வு" data-en="Resolved">தீர்வு</span></div>
+                            <div class="card-stat"><span class="card-stat-number warning">8</span><span class="card-stat-label" data-ta="நிலுவை" data-en="Pending">நிலுவை</span></div>
+                        </div>
+                        <div class="card-departments">
+                            <span class="dept-tag">TNEB: 89</span>
+                            <span class="dept-tag">Water: 134</span>
+                            <span class="dept-tag">Roads: 98</span>
+                            <span class="dept-tag">Health: 68</span>
+                        </div>
+                        <div class="card-alert"><i class="fas fa-bell"></i><span data-ta="2 புகார்கள் 48 மணி நேரத்திற்கு மேல் நிலுவையில்" data-en="2 complaints pending > 48 hours">2 புகார்கள் 48 மணி நேரத்திற்கு மேல் நிலுவையில்</span></div>
+                    </div>
+
+                    <div class="constituency-card">
+                        <div class="card-header-row">
+                            <div>
+                                <h4>Coimbatore South</h4>
+                                <span class="card-mla">MLA: Thiru. Vijay Anand</span>
+                            </div>
+                            <span class="card-badge excellent">97.1%</span>
+                        </div>
+                        <div class="card-stats">
+                            <div class="card-stat"><span class="card-stat-number">402</span><span class="card-stat-label" data-ta="மொத்தம்" data-en="Total">மொத்தம்</span></div>
+                            <div class="card-stat"><span class="card-stat-number good">390</span><span class="card-stat-label" data-ta="தீர்வு" data-en="Resolved">தீர்வு</span></div>
+                            <div class="card-stat"><span class="card-stat-number success">3</span><span class="card-stat-label" data-ta="நிலுவை" data-en="Pending">நிலுவை</span></div>
+                        </div>
+                        <div class="card-departments">
+                            <span class="dept-tag">TNEB: 102</span>
+                            <span class="dept-tag">Water: 87</span>
+                            <span class="dept-tag">Roads: 145</span>
+                            <span class="dept-tag">Health: 68</span>
+                        </div>
+                        <div class="card-alert resolved"><i class="fas fa-check-circle"></i><span data-ta="அனைத்து அவசர புகார்களும் தீர்க்கப்பட்டன" data-en="All urgent complaints resolved">அனைத்து அவசர புகார்களும் தீர்க்கப்பட்டன</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Complaints List Tab -->
+            <div id="tab-complaints" class="tab-content">
+                <div id="dashboard-complaints-list"></div>
+            </div>
+
+            <!-- Actions Tab -->
+            <div id="tab-actions" class="tab-content">
+                <div class="action-panel">
+                    <h3 class="section-title" data-ta="நிலை மாற்றம் செய்யுங்கள்" data-en="Update Complaint Status">நிலை மாற்றம் செய்யுங்கள்</h3>
+                    <div class="action-form">
+                        <div class="form-group">
+                            <label data-ta="புகார் எண்:" data-en="Complaint Number:">புகார் எண்:</label>
+                            <select id="action-complaint-select" onchange="loadComplaintForAction()">
+                                <option value="">-- Select Complaint --</option>
+                            </select>
+                        </div>
+                        <div id="action-complaint-detail" style="display:none;">
+                            <div class="action-complaint-info" id="action-complaint-info"></div>
+                            <div class="form-group">
+                                <label data-ta="புதிய நிலை:" data-en="New Status:">புதிய நிலை:</label>
+                                <select id="action-new-status">
+                                    <option value="acknowledged">ஒப்புக்கொள்ளப்பட்டது / Acknowledged</option>
+                                    <option value="in_progress">நடப்பில் உள்ளது / In Progress</option>
+                                    <option value="resolved">தீர்க்கப்பட்டது / Resolved</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label data-ta="குறிப்பு:" data-en="Remarks:">குறிப்பு:</label>
+                                <textarea id="action-remarks" placeholder="Officer remarks / அதிகாரி குறிப்பு"></textarea>
+                            </div>
+                            <button class="submit-btn" onclick="updateComplaintStatus()">
+                                <i class="fas fa-paper-plane"></i>
+                                <span data-ta="நிலை மாற்றம் & SMS அனுப்பு" data-en="Update Status & Send SMS">நிலை மாற்றம் & SMS அனுப்பு</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SMS Notification Popup -->
+    <div id="sms-popup" class="sms-popup" style="display:none;">
+        <div class="sms-popup-content">
+            <div class="sms-icon"><i class="fas fa-sms"></i></div>
+            <h3 data-ta="SMS அறிவிப்பு அனுப்பப்பட்டது!" data-en="SMS Notification Sent!">SMS அறிவிப்பு அனுப்பப்பட்டது!</h3>
+            <div id="sms-popup-detail"></div>
+            <button onclick="closeSMSPopup()" class="btn-primary" style="margin-top:15px;">
+                <span data-ta="சரி" data-en="OK">சரி</span>
+            </button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
