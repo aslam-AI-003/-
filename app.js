@@ -429,8 +429,7 @@ async function showSuccess(name,mobile,district,taluk,title,desc,dept) {
     chat.appendChild(div); scrollChat(); chatState='done';
 
     setTimeout(()=>{
-        addMessage(`📱 SMS → ${mobile}<br>⏱️ ${currentLang==='ta'?'தீர்வு: 24-48 hrs':'Resolution: 24-48 hrs'}<br>🙏 ${currentLang==='ta'?'"Hi" அனுப்பி புதிய புகார் பதிவு செய்யுங்கள்':'Send "Hi" for new complaint'}`,'incoming',true);
-        document.getElementById('input-area').style.display='flex';
+        addMessage(`📱 SMS → ${mobile}<br>⏱️ ${currentLang==='ta'?'தீர்வு: 24-48 hrs':'Resolution: 24-48 hrs'}<br>🙏 ${currentLang==='ta'?'புதிய புகார்: "Hi" | நிலை: Complaint ID அனுப்புங்கள்':'New complaint: "Hi" | Status: Send complaint ID'}`,'incoming',true);
     },1200);
 }
 
