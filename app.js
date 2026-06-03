@@ -575,12 +575,50 @@ function closeSMSPopup(){document.getElementById('sms-popup').style.display='non
 
 // ==================== INPUT ====================
 function handleKeyPress(e){if(e.key==='Enter')sendUserMessage();}
-function sendUserMessage(){
+async function sendUserMessage(){
     const input=document.getElementById('user-input'); const text=input.value.trim(); if(!text)return;
     addMessage(text,'outgoing'); input.value='';
+    
+    // Restart chat
     if(text.toLowerCase()==='hi'||text==='வணக்கம்'){chatState='init';setTimeout(()=>startChat(),500);return;}
+    
+    // Check if it's a complaint number (starts with TN)
+    if(text.toUpperCase().startsWith('TN')){
+        addTypingIndicator();
+        const c = await getComplaintFromDB(text.toUpperCase());
+        removeTypingIndicator();
+        if(c){
+            const sl = statusLabels[c.status]?statusLabels[c.status][currentLang]:c.status;
+            const cidx = statusFlow.indexOf(c.status);
+            let statusBar = '';
+            statusFlow.forEach((s,i)=>{
+                const icon = i<cidx?'✅':i===cidx?'🔶':'⬜';
+                statusBar += icon + ' ';
+            });
+            const imgLine = c.imageURL?`<br>📷 ${currentLang==='ta'?'படம் இணைக்கப்பட்டது':'Image attached'}`:'';
+            const voiceLine = c.voiceAttached?`<br>🎤 ${currentLang==='ta'?'குரல் இணைப்பு':'Voice attached'}`:'';
+            const gpsLine = c.gpsLocation?`<br>📍 ${c.gpsLocation}`:'';
+            const lastUpdate = c.timeline && c.timeline.length>0 ? c.timeline[c.timeline.length-1] : null;
+            const lastNote = lastUpdate && lastUpdate.note ? `<br>💬 ${lastUpdate.note}` : '';
+            
+            const reply = `📋 <strong>${c.id}</strong><br><br>` +
+                `${statusBar}<br>` +
+                `📊 ${currentLang==='ta'?'நிலை':'Status'}: <strong>${sl}</strong><br>` +
+                `👤 ${c.name} | 📱 ${c.mobile}<br>` +
+                `📍 ${c.district}, ${c.taluk}<br>` +
+                `🏢 ${currentLang==='ta'?c.departmentNameTa:c.departmentName}<br>` +
+                `📝 ${c.title}${gpsLine}${imgLine}${voiceLine}${lastNote}<br><br>` +
+                `<small style="color:var(--text-muted)">${currentLang==='ta'?'புதிய புகார்: "Hi" | நிலை: Complaint ID அனுப்புங்கள்':'New complaint: "Hi" | Status: Send complaint ID'}</small>`;
+            addMessage(reply,'incoming',true);
+        } else {
+            addMessage(currentLang==='ta'?`❌ "${text}" - புகார் எண் கிடைக்கவில்லை. சரியான எண்ணை உள்ளிடவும்.`:`❌ "${text}" - Complaint not found. Please check the number.`,'incoming',true);
+        }
+        return;
+    }
+    
+    // Default reply
     addTypingIndicator();
-    setTimeout(()=>{removeTypingIndicator();addMessage(currentLang==='ta'?'🙏 "Hi" அனுப்பி புதிய புகார் பதிவு செய்யுங்கள்':'🙏 Send "Hi" for new complaint','incoming',true);},1000);
+    setTimeout(()=>{removeTypingIndicator();addMessage(currentLang==='ta'?'🙏 புதிய புகார்: "Hi" அனுப்புங்கள் | நிலை அறிய: Complaint ID (TN2024XXXXX) அனுப்புங்கள்':'🙏 New complaint: Send "Hi" | Track status: Send complaint ID (TN2024XXXXX)','incoming',true);},1000);
 }
 
 // ==================== INIT ====================
