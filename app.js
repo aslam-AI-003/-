@@ -32,6 +32,46 @@ const tnDistricts = [
     'Tenkasi','Mayiladuthurai','Tiruvallur'
 ];
 
+const tnTaluks = {
+    'Chennai': ['Tondiarpet','Fort Tondiarpet','Egmore-Nungambakkam','Mambalam-Guindy','Mylapore-Triplicane','Perambur-Purasawalkam','Ambattur','Madhavaram','Sholinganallur','Alandur','Tiruvottiyur'],
+    'Coimbatore': ['Coimbatore North','Coimbatore South','Mettupalayam','Sulur','Pollachi','Valparai','Annur','Kinathukadavu','Madukkarai','Perur'],
+    'Madurai': ['Madurai North','Madurai South','Melur','Thirumangalam','Usilampatti','Vadipatti','Peraiyur','Kallikudi'],
+    'Tiruchirappalli': ['Tiruchirappalli','Srirangam','Lalgudi','Manachanallur','Musiri','Thottiyam','Thuraiyur','Manapparai'],
+    'Salem': ['Salem','Attur','Mettur','Omalur','Gangavalli','Yercaud','Edappadi','Sankagiri'],
+    'Tirunelveli': ['Tirunelveli','Palayamkottai','Ambasamudram','Cheranmahadevi','Nanguneri','Radhapuram','Sankarankovil','Tenkasi'],
+    'Tiruppur': ['Tiruppur North','Tiruppur South','Avinashi','Palladam','Dharapuram','Udumalpet','Kangeyam','Madathukulam'],
+    'Erode': ['Erode','Bhavani','Gobichettipalayam','Sathyamangalam','Perundurai','Anthiyur','Nambiyur','Modakurichi'],
+    'Vellore': ['Vellore','Arcot','Gudiyatham','Ambur','Katpadi','Anaicut','Sholinghur','Walajah'],
+    'Thoothukudi': ['Thoothukudi','Kovilpatti','Tiruchendur','Vilathikulam','Ottapidaram','Srivaikuntam','Kayathar','Sathankulam'],
+    'Dindigul': ['Dindigul','Palani','Oddanchatram','Natham','Nilakottai','Vedasandur','Kodaikanal','Athoor'],
+    'Thanjavur': ['Thanjavur','Kumbakonam','Papanasam','Pattukkottai','Peravurani','Orathanadu','Thiruvaiyaru','Thiruvidaimarudur'],
+    'Ranipet': ['Ranipet','Arakkonam','Walajapet','Arcot','Sholinghur','Nemili','Timiri'],
+    'Sivaganga': ['Sivaganga','Karaikudi','Devakottai','Manamadurai','Ilayangudi','Tirupathur','Kalayarkoil'],
+    'Karur': ['Karur','Kulithalai','Aravakurichi','Krishnarayapuram','Pugalur','Manmangalam','Kadavur'],
+    'Namakkal': ['Namakkal','Rasipuram','Tiruchengode','Paramathi-Velur','Komarapalayam','Mohanur','Sendamangalam'],
+    'Cuddalore': ['Cuddalore','Chidambaram','Virudhachalam','Panruti','Kattumannarkoil','Tittakudi','Kurinjipadi','Bhuvanagiri'],
+    'Nagapattinam': ['Nagapattinam','Sirkazhi','Thirukkuvalai','Kilvelur','Vedaranyam','Mayiladuthurai','Tharangambadi'],
+    'Virudhunagar': ['Virudhunagar','Sivakasi','Rajapalayam','Srivilliputhur','Aruppukkottai','Sattur','Tiruchuli','Kariyapatti'],
+    'Kanniyakumari': ['Nagercoil','Thuckalay','Agastheeswaram','Vilavancode','Kalkulam','Thiruvattar','Killiyoor','Kurunthencode'],
+    'Theni': ['Theni','Periyakulam','Bodinayakanur','Uthamapalayam','Andipatti','Cumbum','Myladumparai'],
+    'Krishnagiri': ['Krishnagiri','Hosur','Denkanikottai','Pochampalli','Uthangarai','Veppanapalli','Kaveripattinam','Bargur'],
+    'Perambalur': ['Perambalur','Kunnam','Veppanthattai','Alathur'],
+    'Ariyalur': ['Ariyalur','Jayamkondam','Sendurai','Andimadam','Udayarpalayam','Thirumanur'],
+    'Nilgiris': ['Udhagamandalam','Coonoor','Kotagiri','Gudalur','Pandalur','Kundah'],
+    'Dharmapuri': ['Dharmapuri','Harur','Palacode','Pennagaram','Nallampalli','Karimangalam','Pappireddipatti','Morappur'],
+    'Ramanathapuram': ['Ramanathapuram','Paramakudi','Rameswaram','Mudukulathur','Tiruvadanai','Kadaladi','Kamuthi'],
+    'Villupuram': ['Villupuram','Tindivanam','Gingee','Vanur','Kandachipuram','Ulundurpet','Sankarapuram','Kallakurichi'],
+    'Pudukkottai': ['Pudukkottai','Aranthangi','Alangudi','Avudayarkoil','Gandarvakottai','Illupur','Thirumayam','Manamelkudi'],
+    'Tirupattur': ['Tirupattur','Vaniyambadi','Ambur','Natrampalli','Jolarpet','Kandili'],
+    'Tiruvannamalai': ['Tiruvannamalai','Arani','Polur','Cheyyar','Vandavasi','Chengam','Kilpennathur','Thandarampattu'],
+    'Chengalpattu': ['Chengalpattu','Tambaram','Pallavaram','Madurantakam','Tirukalukundram','Kattankulathur','Thiruporur','Vandalur'],
+    'Kancheepuram': ['Kancheepuram','Sriperumbudur','Uthiramerur','Kundrathur','Walajabad'],
+    'Kallakurichi': ['Kallakurichi','Ulundurpet','Sankarapuram','Tirukoilur','Chinnasalem','Rishivandiyam'],
+    'Tenkasi': ['Tenkasi','Sankarankovil','Kadayanallur','Shencottai','Alangulam','Vasudevanallur','Thiruvengadam'],
+    'Mayiladuthurai': ['Mayiladuthurai','Sirkazhi','Kuthalam','Tharangambadi','Poompuhar','Sembanarkoil'],
+    'Tiruvallur': ['Tiruvallur','Ponneri','Gummidipoondi','Tiruttani','Poonamallee','Avadi','Ambattur','Pallipattu']
+};
+
 const departments = [
     { id:'tneb', name:'TNEB (மின்சார வாரியம்)', nameEn:'TNEB (Electricity Board)', icon:'fa-bolt', division:'TNEB', divisionTa:'TNEB மின்சார வாரியம்' },
     { id:'water', name:'குடிநீர் வாரியம்', nameEn:'Water Board', icon:'fa-tint', division:'TN Water Board', divisionTa:'தமிழ்நாடு குடிநீர் வாரியம்' },
@@ -240,6 +280,8 @@ function showComplaintForm(dept) {
             mobile:currentLang==='ta'?'கைபேசி எண் (10 இலக்கம்)':'Mobile (10 digits)',
             district:currentLang==='ta'?'மாவட்டம்':'District',
             taluk:currentLang==='ta'?'வட்டம்':'Taluk',
+            street:currentLang==='ta'?'தெரு பெயர்':'Street Name',
+            pincode:currentLang==='ta'?'அஞ்சல் குறியீடு (6 இலக்கம்)':'Pincode (6 digits)',
             title:currentLang==='ta'?'புகார் தலைப்பு':'Problem Title',
             desc:currentLang==='ta'?'விரிவான விளக்கம்':'Description',
             gps:currentLang==='ta'?'📍 GPS':'📍 GPS',
@@ -252,9 +294,11 @@ function showComplaintForm(dept) {
                 <input type="text" id="form-name" placeholder="${L.name}">
                 <input type="tel" id="form-mobile" placeholder="${L.mobile}" maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,10)">
                 <div class="form-row">
-                    <select id="form-district"><option value="">${L.district}</option>${opts}</select>
-                    <input type="text" id="form-taluk" placeholder="${L.taluk}">
+                    <select id="form-district" onchange="updateTalukDropdown()"><option value="">${L.district}</option>${opts}</select>
+                    <select id="form-taluk"><option value="">${L.taluk}</option></select>
                 </div>
+                <input type="text" id="form-street" placeholder="${L.street}">
+                <input type="tel" id="form-pincode" placeholder="${L.pincode}" maxlength="6" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,6)">
                 <input type="text" id="form-title" placeholder="${L.title}">
                 <textarea id="form-desc" placeholder="${L.desc}"></textarea>
                 <div class="action-btn-row">
@@ -268,6 +312,19 @@ function showComplaintForm(dept) {
             </div>`;
         document.getElementById('chat-container').appendChild(formDiv); scrollChat();
     },200);
+}
+
+// Update Taluk dropdown based on selected District
+function updateTalukDropdown() {
+    const district = document.getElementById('form-district').value;
+    const talukSelect = document.getElementById('form-taluk');
+    const talukLabel = currentLang==='ta'?'வட்டம்':'Taluk';
+    talukSelect.innerHTML = `<option value="">${talukLabel}</option>`;
+    if(district && tnTaluks[district]) {
+        tnTaluks[district].forEach(t => {
+            talukSelect.innerHTML += `<option value="${t}">${t}</option>`;
+        });
+    }
 }
 
 let gpsLocation = '';
@@ -377,20 +434,25 @@ async function submitComplaint() {
     const name=document.getElementById('form-name').value.trim()||'Demo User';
     const mobile=document.getElementById('form-mobile').value.trim()||'9876543210';
     const district=document.getElementById('form-district').value||'Chennai';
-    const taluk=document.getElementById('form-taluk').value.trim()||'T. Nagar';
+    const taluk=document.getElementById('form-taluk').value||'T. Nagar';
+    const street=document.getElementById('form-street').value.trim()||'';
+    const pincode=document.getElementById('form-pincode').value.trim()||'';
     const title=document.getElementById('form-title').value.trim()||(currentLang==='ta'?'பொது புகார்':'General Complaint');
     const desc=document.getElementById('form-desc').value.trim()||'';
 
     if(mobile.length!==10){alert(currentLang==='ta'?'10 இலக்க கைபேசி எண் தேவை':'Please enter 10 digit mobile number');return;}
+    if(pincode && pincode.length!==6){alert(currentLang==='ta'?'6 இலக்க அஞ்சல் குறியீடு தேவை':'Please enter 6 digit pincode');return;}
 
     document.querySelectorAll('#complaint-form input,#complaint-form select,#complaint-form textarea,#complaint-form button').forEach(el=>{el.disabled=true;el.style.opacity='0.5';});
 
-    addMessage(`👤 ${name}<br>📱 ${mobile}<br>📍 ${district}, ${taluk}<br>📝 ${title}${uploadedImageURL?'<br>📷 Image attached':''}${voiceRecorded?'<br>🎤 Voice attached':''}`,'outgoing',true);
+    const streetInfo=street?`, ${street}`:'';
+    const pincodeInfo=pincode?` - ${pincode}`:'';
+    addMessage(`👤 ${name}<br>📱 ${mobile}<br>📍 ${district}, ${taluk}${streetInfo}${pincodeInfo}<br>📝 ${title}${uploadedImageURL?'<br>📷 Image attached':''}${voiceRecorded?'<br>🎤 Voice attached':''}`,'outgoing',true);
 
-    setTimeout(()=>showAIRouting(name,mobile,district,taluk,title,desc),600);
+    setTimeout(()=>showAIRouting(name,mobile,district,taluk,street,pincode,title,desc),600);
 }
 
-function showAIRouting(name,mobile,district,taluk,title,desc) {
+function showAIRouting(name,mobile,district,taluk,street,pincode,title,desc) {
     const chat=document.getElementById('chat-container');
     const dept=departments.find(d=>d.id===selectedDepartment);
     const aiDiv=document.createElement('div'); aiDiv.className='message incoming'; aiDiv.id='ai-routing-msg'; aiDiv.style.maxWidth='85%';
@@ -400,16 +462,17 @@ function showAIRouting(name,mobile,district,taluk,title,desc) {
     setTimeout(()=>{aiDiv.querySelector('.ai-text').textContent=currentLang==='ta'?`🔍 வகைப்படுத்துதல்... ${dept.divisionTa}`:`🔍 Classifying... ${dept.division}`;},1200);
     setTimeout(()=>{aiDiv.querySelector('.ai-text').textContent=currentLang==='ta'?`🗺️ ${district} → ${taluk}`:`🗺️ ${district} → ${taluk}`;},2500);
     setTimeout(()=>{aiDiv.querySelector('.ai-text').textContent=currentLang==='ta'?`👤 ${dept.divisionTa} - ${district}`:`👤 ${dept.division} - ${district}`;},3800);
-    setTimeout(()=>{aiDiv.remove();showSuccess(name,mobile,district,taluk,title,desc,dept);},5200);
+    setTimeout(()=>{aiDiv.remove();showSuccess(name,mobile,district,taluk,street,pincode,title,desc,dept);},5200);
 }
 
-async function showSuccess(name,mobile,district,taluk,title,desc,dept) {
+async function showSuccess(name,mobile,district,taluk,street,pincode,title,desc,dept) {
     complaintNumber = await getNextComplaintNumber();
     const assignedTo=`${dept.division} - ${district} Division`;
     const assignedToTa=`${dept.divisionTa} - ${district} Division`;
 
     const complaint={
-        id:complaintNumber, name, mobile, district, taluk, title, description:desc,
+        id:complaintNumber, name, mobile, district, taluk, street:street||'', pincode:pincode||'',
+        title, description:desc,
         department:dept.id, departmentName:dept.nameEn, departmentNameTa:dept.name,
         assignedTo, assignedToTa, status:'routed',
         imageURL:uploadedImageURL||'', voiceAttached:voiceRecorded,
@@ -475,7 +538,10 @@ async function trackComplaint() {
     const imgHtml=c.imageURL?`<p><strong>${currentLang==='ta'?'படம்:':'Image:'}</strong><br><img src="${c.imageURL}" style="width:100%;max-height:150px;object-fit:cover;border-radius:6px;margin-top:5px;"></p>`:'';
     const voiceHtml=c.voiceAttached?`<p><strong>🎤 ${currentLang==='ta'?'குரல் இணைப்பு உள்ளது':'Voice attached'}</strong></p>`:'';
 
-    result.innerHTML=`<div class="complaint-card"><div class="complaint-header"><span class="complaint-number">${c.id}</span><span class="complaint-status status-${sc}">${sl}</span></div><div class="complaint-details"><p><strong>${currentLang==='ta'?'துறை:':'Dept:'}</strong> ${currentLang==='ta'?c.departmentNameTa:c.departmentName}</p><p><strong>${currentLang==='ta'?'புகார்:':'Issue:'}</strong> ${c.title}</p><p><strong>${currentLang==='ta'?'பகுதி:':'Area:'}</strong> ${c.taluk}, ${c.district}</p><p><strong>${currentLang==='ta'?'ஒதுக்கீடு:':'Assigned:'}</strong> ${currentLang==='ta'?c.assignedToTa:c.assignedTo}</p>${imgHtml}${voiceHtml}</div></div><div class="timeline">${tl}</div>`;
+    const streetHtml=c.street?`<p><strong>${currentLang==='ta'?'தெரு:':'Street:'}</strong> ${c.street}</p>`:'';
+    const pincodeHtml=c.pincode?`<p><strong>${currentLang==='ta'?'அஞ்சல் குறியீடு:':'Pincode:'}</strong> ${c.pincode}</p>`:'';
+
+    result.innerHTML=`<div class="complaint-card"><div class="complaint-header"><span class="complaint-number">${c.id}</span><span class="complaint-status status-${sc}">${sl}</span></div><div class="complaint-details"><p><strong>${currentLang==='ta'?'துறை:':'Dept:'}</strong> ${currentLang==='ta'?c.departmentNameTa:c.departmentName}</p><p><strong>${currentLang==='ta'?'புகார்:':'Issue:'}</strong> ${c.title}</p><p><strong>${currentLang==='ta'?'பகுதி:':'Area:'}</strong> ${c.taluk}, ${c.district}</p>${streetHtml}${pincodeHtml}<p><strong>${currentLang==='ta'?'ஒதுக்கீடு:':'Assigned:'}</strong> ${currentLang==='ta'?c.assignedToTa:c.assignedTo}</p>${imgHtml}${voiceHtml}</div></div><div class="timeline">${tl}</div>`;
 }
 
 // ==================== MLA DASHBOARD ====================
@@ -544,7 +610,9 @@ async function loadComplaintForAction() {
     if(!c)return;
     const info=document.getElementById('action-complaint-info');
     const img=c.imageURL?`<br><img src="${c.imageURL}" style="width:100%;max-height:100px;object-fit:cover;border-radius:6px;margin-top:5px;">`:'';
-    info.innerHTML=`<strong>${c.id}</strong><br>👤 ${c.name} | 📱 ${c.mobile}<br>📍 ${c.district}, ${c.taluk}<br>📝 ${c.title}<br>🏢 ${currentLang==='ta'?c.assignedToTa:c.assignedTo}<br>📊 ${statusLabels[c.status][currentLang]}${c.voiceAttached?' | 🎤 Voice':''}${img}`;
+    const actionStreet=c.street?`<br>🏠 ${c.street}`:'';
+    const actionPincode=c.pincode?` | 📮 ${c.pincode}`:'';
+    info.innerHTML=`<strong>${c.id}</strong><br>👤 ${c.name} | 📱 ${c.mobile}<br>📍 ${c.district}, ${c.taluk}${actionStreet}${actionPincode}<br>📝 ${c.title}<br>🏢 ${currentLang==='ta'?c.assignedToTa:c.assignedTo}<br>📊 ${statusLabels[c.status][currentLang]}${c.voiceAttached?' | 🎤 Voice':''}${img}`;
     const cidx=statusFlow.indexOf(c.status);
     document.getElementById('action-new-status').value=statusFlow[Math.min(cidx+1,4)];
     detail.style.display='block';
@@ -600,11 +668,14 @@ async function sendUserMessage(){
             const lastUpdate = c.timeline && c.timeline.length>0 ? c.timeline[c.timeline.length-1] : null;
             const lastNote = lastUpdate && lastUpdate.note ? `<br>💬 ${lastUpdate.note}` : '';
             
+            const streetLine = c.street?`<br>🏠 ${c.street}`:'';
+            const pincodeLine = c.pincode?` - ${c.pincode}`:'';
+            
             const reply = `📋 <strong>${c.id}</strong><br><br>` +
                 `${statusBar}<br>` +
                 `📊 ${currentLang==='ta'?'நிலை':'Status'}: <strong>${sl}</strong><br>` +
                 `👤 ${c.name} | 📱 ${c.mobile}<br>` +
-                `📍 ${c.district}, ${c.taluk}<br>` +
+                `📍 ${c.district}, ${c.taluk}${streetLine}${pincodeLine}<br>` +
                 `🏢 ${currentLang==='ta'?c.departmentNameTa:c.departmentName}<br>` +
                 `📝 ${c.title}${gpsLine}${imgLine}${voiceLine}${lastNote}<br><br>` +
                 `<small style="color:var(--text-muted)">${currentLang==='ta'?'புதிய புகார்: "Hi" | நிலை: Complaint ID அனுப்புங்கள்':'New complaint: "Hi" | Status: Send complaint ID'}</small>`;
