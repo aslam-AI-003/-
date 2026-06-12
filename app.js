@@ -562,7 +562,221 @@ function refreshDashboard() {
         window._dashComplaints = complaints;
         renderDashList();
         populateActionSelect();
+        updateOverviewStats(complaints);
+        updateWeeklyGraph(complaints);
+        updateAreaChart(complaints);
+        updateCategoryChart(complaints);
     });
+}
+
+// ==================== DYNAMIC OVERVIEW STATS & WEEKLY GRAPH ====================
+function updateOverviewStats(complaints) {
+    if(!complaints || !complaints.length) return;
+    
+    const today = new Date();
+    today.setHours(0,0,0,0);
+    
+    const total = complaints.length;
+    const resolved = complaints.filter(c => c.status === 'resolved').length;
+    const pending = complaints.filter(c => c.status !== 'resolved').length;
+    
+    // Today's complaints
+    const newToday = complaints.filter(c => {
+        const d = new Date(c.createdAt);
+        d.setHours(0,0,0,0);
+        return d.getTime() === today.getTime();
+    }).length;
+    
+    // Resolved today
+    const resolvedToday = complaints.filter(c => {
+        if(c.status !== 'resolved' || !c.timeline) return false;
+        const resolvedEntry = c.timeline.find(t => t.status === 'resolved');
+        if(!resolvedEntry || !resolvedEntry.time) return false;
+        const d = new Date(resolvedEntry.time);
+        d.setHours(0,0,0,0);
+        return d.getTime() === today.getTime();
+    }).length;
+    
+    // Resolution rate
+    const resolutionRate = total > 0 ? ((resolved / total) * 100).toFixed(1) : '0';
+    
+    // Update DOM elements if they exist
+    const el = (id, val) => { const e = document.getElementById(id); if(e) e.textContent = val; };
+    el('overview-total', total);
+    el('overview-new', newToday);
+    el('overview-resolved', resolved);
+    el('overview-today-resolved', resolvedToday);
+    el('overview-pending', pending);
+    el('trust-resolution', resolutionRate + '%');
+    
+    // Update trust donut (stroke-dasharray based on percentage)
+    const percent = total > 0 ? (resolved / total) * 100 : 0;
+    const circumference = 2 * Math.PI * 50; // r=50
+    const filled = (percent / 100) * circumference;
+    const remaining = circumference - filled;
+    const donutCircle = document.querySelector('.donut-svg circle:nth-child(2)');
+    if(donutCircle) {
+        donutCircle.setAttribute('stroke-dasharray', `${filled.toFixed(0)} ${remaining.toFixed(0)}`);
+    }
+    const trustPercent = document.getElementById('trust-percent');
+    if(trustPercent) trustPercent.textContent = Math.round(percent) + '%';
+}
+
+function updateWeeklyGraph(complaints) {
+    if(!complaints || !complaints.length) return;
+    
+    // Get last 7 days (Mon-Sat or current week)
+    const today = new Date();
+    const dayOfWeek = today.getDay(); // 0=Sun, 1=Mon...
+    const mondayOffset = dayOfWeek === 0 ? -6 : 1 - dayOfWeek;
+    const monday = new Date(today);
+    monday.setDate(today.getDate() + mondayOffset);
+    monday.setHours(0,0,0,0);
+    
+    const days = [];
+    for(let i = 0; i < 6; i++) { // Mon to Sat
+        const d = new Date(monday);
+        d.setDate(monday.getDate() + i);
+        days.push(d);
+    }
+    
+    // Count filed & resolved per day
+    const weekData = days.map(day => {
+        const dayEnd = new Date(day);
+        dayEnd.setHours(23,59,59,999);
+        
+        const filed = complaints.filter(c => {
+            const d = new Date(c.createdAt);
+            return d >= day && d <= dayEnd;
+        }).length;
+        
+        const resolved = complaints.filter(c => {
+            if(c.status !== 'resolved' || !c.timeline) return false;
+            const resolvedEntry = c.timeline.find(t => t.status === 'resolved');
+            if(!resolvedEntry || !resolvedEntry.time) return false;
+            const d = new Date(resolvedEntry.time);
+            return d >= day && d <= dayEnd;
+        }).length;
+        
+        return { filed, resolved };
+    });
+    
+    // Find max for percentage calculation
+    const maxFiled = Math.max(...weekData.map(d => d.filed), 1);
+    
+    // Update chart bars
+    const barGroups = document.querySelectorAll('.chart-bar-group');
+    barGroups.forEach((group, i) => {
+        if(i >= weekData.length) return;
+        const data = weekData[i];
+        const wrapper = group.querySelector('.chart-bar-wrapper');
+        if(!wrapper) return;
+        
+        const filedBar = wrapper.querySelectorAll('.chart-bar')[0];
+        const resolvedBar = wrapper.querySelectorAll('.chart-bar')[1];
+        const filedVal = wrapper.querySelectorAll('.bar-value, .bar-value-sm')[0];
+        const resolvedVal = wrapper.querySelectorAll('.bar-value, .bar-value-sm')[1];
+        
+        if(filedBar) filedBar.style.height = Math.max((data.filed / maxFiled) * 80, data.filed > 0 ? 8 : 0) + '%';
+        if(resolvedBar) resolvedBar.style.height = Math.max((data.resolved / maxFiled) * 80, data.resolved > 0 ? 8 : 0) + '%';
+        if(filedVal) filedVal.textContent = data.filed;
+        if(resolvedVal) resolvedVal.textContent = data.resolved;
+    });
+    
+    // Update summary
+    const totalResolved = weekData.reduce((sum, d) => sum + d.resolved, 0);
+    const avgPerDay = weekData.filter(d => d.resolved > 0).length > 0 
+        ? Math.round(totalResolved / weekData.filter(d => d.resolved > 0).length) : 0;
+    const summaryEl = document.querySelector('.chart-summary span');
+    if(summaryEl) {
+        summaryEl.textContent = currentLang === 'ta' 
+            ? `📊 இந்த வாரம் ${totalResolved} தீர்வு | சராசரி ${avgPerDay}/நாள்`
+            : `📊 This week ${totalResolved} resolved | Average ${avgPerDay}/day`;
+    }
+}
+
+// ==================== DYNAMIC AREA & CATEGORY CHARTS ====================
+function updateAreaChart(complaints) {
+    if(!complaints || !complaints.length) return;
+    const container = document.querySelector('.area-bars');
+    if(!container) return;
+    
+    // Group by taluk (area) - normalize case to handle duplicates
+    const areaCounts = {};
+    complaints.forEach(c => {
+        let area = c.taluk || c.district || 'Unknown';
+        // Capitalize first letter of each word for consistency
+        area = area.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
+        areaCounts[area] = (areaCounts[area] || 0) + 1;
+    });
+    
+    // Sort by count descending, take top 6
+    const sorted = Object.entries(areaCounts)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 6);
+    
+    if(!sorted.length) return;
+    const maxCount = sorted[0][1];
+    
+    // Color gradient from dark red (high) to light red (low)
+    const colors = ['#c62828', '#d32f2f', '#e53935', '#ef5350', '#f44336', '#ff5252'];
+    
+    let html = '';
+    sorted.forEach(([area, count], i) => {
+        const widthPercent = Math.round((count / maxCount) * 100);
+        const color = colors[i] || colors[colors.length - 1];
+        html += `<div class="area-bar-item">
+            <span class="area-bar-name">${area}</span>
+            <div class="area-bar-track"><div class="area-bar-fill" style="width:${widthPercent}%;background:${color};"></div></div>
+            <span class="area-bar-num">${count}</span>
+        </div>`;
+    });
+    
+    container.innerHTML = html;
+}
+
+function updateCategoryChart(complaints) {
+    if(!complaints || !complaints.length) return;
+    const container = document.querySelector('.category-list');
+    if(!container) return;
+    
+    // Department config for icons and colors
+    const deptConfig = {
+        'roads': { icon: 'fa-road', color: '#c62828', nameTa: 'சாலைகள்', nameEn: 'Roads' },
+        'water': { icon: 'fa-tint', color: '#1565c0', nameTa: 'குடிநீர்', nameEn: 'Water' },
+        'tneb': { icon: 'fa-bolt', color: '#f57c00', nameTa: 'மின்சாரம்', nameEn: 'Electricity' },
+        'health': { icon: 'fa-heartbeat', color: '#d32f2f', nameTa: 'சுகாதாரம்', nameEn: 'Health' },
+        'revenue': { icon: 'fa-landmark', color: '#6a1b9a', nameTa: 'வருவாய்', nameEn: 'Revenue' }
+    };
+    
+    // Group by department
+    const deptCounts = {};
+    complaints.forEach(c => {
+        const dept = c.department || 'other';
+        deptCounts[dept] = (deptCounts[dept] || 0) + 1;
+    });
+    
+    // Sort by count descending
+    const sorted = Object.entries(deptCounts)
+        .sort((a, b) => b[1] - a[1]);
+    
+    if(!sorted.length) return;
+    const maxCount = sorted[0][1];
+    
+    let html = '';
+    sorted.forEach(([dept, count]) => {
+        const config = deptConfig[dept] || { icon: 'fa-folder', color: '#757575', nameTa: dept, nameEn: dept };
+        const widthPercent = Math.round((count / maxCount) * 100);
+        const name = currentLang === 'ta' ? config.nameTa : config.nameEn;
+        html += `<div class="category-item">
+            <i class="fas ${config.icon}" style="color:${config.color};"></i>
+            <span class="cat-name">${name}</span>
+            <span class="cat-num">${count}</span>
+            <div class="cat-bar" style="width:${widthPercent}%;background:${config.color};"></div>
+        </div>`;
+    });
+    
+    container.innerHTML = html;
 }
 
 function renderDashList() {

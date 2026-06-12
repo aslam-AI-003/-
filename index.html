@@ -38,7 +38,7 @@
                 <div class="leader-card">
                     <img src="asset/6380.jpg" alt="R. Kumar" class="leader-photo">
                     <div class="leader-info">
-                        <span class="leader-role" data-ta="AI, IT & டிஜிட்டல் அமைச்சர்" data-en="Minister for AI, IT & Digital">AI, IT & டிஜிட்டல் அமைச்சர்</span>
+                        <span class="leader-role" data-ta="AI & IT அமைச்சர் - Velachery" data-en="Minister for AI & IT - Velachery">AI & IT அமைச்சர் - Velachery</span>
                         <span class="leader-name">திரு. R. Kumar</span>
                     </div>
                 </div>
@@ -166,97 +166,435 @@
 
             <!-- Overview Tab -->
             <div id="tab-overview" class="tab-content active">
-                <div class="dashboard-summary">
-                    <div class="summary-card">
-                        <i class="fas fa-file-alt"></i>
-                        <div>
-                            <span class="summary-number" id="dash-total">1,247</span>
-                            <span class="summary-label" data-ta="மொத்த புகார்கள்" data-en="Total Complaints">மொத்த புகார்கள்</span>
+                <!-- Trust Score Section -->
+                <div class="trust-score-section">
+                    <div class="trust-score-left">
+                        <div class="trust-donut">
+                            <svg viewBox="0 0 120 120" class="donut-svg">
+                                <circle cx="60" cy="60" r="50" fill="none" stroke="#e0e0e0" stroke-width="12"/>
+                                <circle cx="60" cy="60" r="50" fill="none" stroke="#0D7377" stroke-width="12" 
+                                    stroke-dasharray="170 144" stroke-linecap="round" transform="rotate(-90 60 60)"/>
+                            </svg>
+                            <div class="trust-score-value">
+                                <span class="trust-percent" id="trust-percent">54%</span>
+                                <span class="trust-label-small" data-ta="நம்பிக்கை" data-en="Trust">நம்பிக்கை</span>
+                            </div>
                         </div>
                     </div>
-                    <div class="summary-card">
-                        <i class="fas fa-check-circle"></i>
-                        <div>
-                            <span class="summary-number" id="dash-resolved">1,089</span>
-                            <span class="summary-label" data-ta="தீர்க்கப்பட்டவை" data-en="Resolved">தீர்க்கப்பட்டவை</span>
-                        </div>
-                    </div>
-                    <div class="summary-card alert">
-                        <i class="fas fa-exclamation-triangle"></i>
-                        <div>
-                            <span class="summary-number" id="dash-pending">23</span>
-                            <span class="summary-label" data-ta="அவசர நிலுவை" data-en="Urgent Pending">அவசர நிலுவை</span>
+                    <div class="trust-score-right">
+                        <h3>🏆 <span data-ta="மக்கள் நம்பிக்கை Index" data-en="People's Trust Index">மக்கள் நம்பிக்கை Index</span></h3>
+                        <p class="trust-subtitle" data-ta="People's Trust Score" data-en="People's Trust Score">People's Trust Score</p>
+                        <div class="trust-metrics">
+                            <div class="trust-metric-item">
+                                <span class="trust-metric-label" data-ta="தீர்வு விகிதம்" data-en="Resolution Rate">தீர்வு விகிதம்</span>
+                                <span class="trust-metric-value" id="trust-resolution">16.2%</span>
+                            </div>
+                            <div class="trust-metric-item">
+                                <span class="trust-metric-label" data-ta="சராசரி பதில் நேரம்" data-en="Avg Response Time">சராசரி பதில் நேரம்</span>
+                                <span class="trust-metric-value" id="trust-response">2.3 Days</span>
+                            </div>
+                            <div class="trust-metric-item">
+                                <span class="trust-metric-label" data-ta="திருப்தி மதிப்பீடு" data-en="Satisfaction Rating">திருப்தி மதிப்பீடு</span>
+                                <span class="trust-metric-value">4.0/5 ⭐</span>
+                            </div>
+                            <div class="trust-metric-item">
+                                <span class="trust-metric-label" data-ta="செயலில் தொண்டர்கள்" data-en="Active Volunteers">செயலில் தொண்டர்கள்</span>
+                                <span class="trust-metric-value">48</span>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <h3 class="section-title" data-ta="தொகுதி வாரியான நிலை" data-en="Constituency-wise Status">தொகுதி வாரியான நிலை</h3>
-                
-                <div class="constituency-cards">
-                    <div class="constituency-card">
-                        <div class="card-header-row">
-                            <div>
-                                <h4>T. Nagar (Chennai)</h4>
-                                <span class="card-mla">MLA: Thiru. Ramesh Kumar</span>
+                <!-- Constituency Heatmap - Full Tamil Nadu -->
+                <div class="heatmap-section">
+                    <h3 class="section-title-new"><i class="fas fa-map-marked-alt"></i> <span data-ta="புகார் வெப்ப வரைபடம் - தமிழ்நாடு முழுவதும்" data-en="Complaint Heatmap - All Tamil Nadu">புகார் வெப்ப வரைபடம் - தமிழ்நாடு முழுவதும்</span></h3>
+                    <div class="heatmap-container">
+                        <div class="heatmap-visual tn-map">
+                            <!-- North TN -->
+                            <div class="heatmap-area area-high" style="top:5%;left:55%;">
+                                <span class="area-name">Chennai</span>
+                                <span class="area-count">4,562 புகார்கள்</span>
                             </div>
-                            <span class="card-badge good">94.2%</span>
+                            <div class="heatmap-area area-high" style="top:12%;left:35%;">
+                                <span class="area-name">Tiruvallur</span>
+                                <span class="area-count">1,823 புகார்கள்</span>
+                            </div>
+                            <div class="heatmap-area area-med" style="top:8%;left:15%;">
+                                <span class="area-name">Vellore</span>
+                                <span class="area-count">987 புகார்கள்</span>
+                            </div>
+                            <!-- Central TN -->
+                            <div class="heatmap-area area-high" style="top:30%;left:60%;">
+                                <span class="area-name">Coimbatore</span>
+                                <span class="area-count">2,341 புகார்கள்</span>
+                            </div>
+                            <div class="heatmap-area area-med" style="top:35%;left:25%;">
+                                <span class="area-name">Salem</span>
+                                <span class="area-count">1,456 புகார்கள்</span>
+                            </div>
+                            <div class="heatmap-area area-low" style="top:28%;left:80%;">
+                                <span class="area-name">Trichy</span>
+                                <span class="area-count">678 புகார்கள்</span>
+                            </div>
+                            <!-- South TN -->
+                            <div class="heatmap-area area-high" style="top:55%;left:40%;">
+                                <span class="area-name">Madurai</span>
+                                <span class="area-count">2,189 புகார்கள்</span>
+                            </div>
+                            <div class="heatmap-area area-med" style="top:60%;left:70%;">
+                                <span class="area-name">Thanjavur</span>
+                                <span class="area-count">1,102 புகார்கள்</span>
+                            </div>
+                            <div class="heatmap-area area-low" style="top:75%;left:25%;">
+                                <span class="area-name">Tirunelveli</span>
+                                <span class="area-count">534 புகார்கள்</span>
+                            </div>
+                            <div class="heatmap-area area-med" style="top:80%;left:55%;">
+                                <span class="area-name">Thoothukudi</span>
+                                <span class="area-count">892 புகார்கள்</span>
+                            </div>
                         </div>
-                        <div class="card-stats">
-                            <div class="card-stat"><span class="card-stat-number">456</span><span class="card-stat-label" data-ta="மொத்தம்" data-en="Total">மொத்தம்</span></div>
-                            <div class="card-stat"><span class="card-stat-number good">430</span><span class="card-stat-label" data-ta="தீர்வு" data-en="Resolved">தீர்வு</span></div>
-                            <div class="card-stat"><span class="card-stat-number warning">12</span><span class="card-stat-label" data-ta="நிலுவை" data-en="Pending">நிலுவை</span></div>
+                        <div class="heatmap-legend">
+                            <div class="legend-bar"></div>
+                            <div class="legend-labels">
+                                <span>Low</span><span>Med</span><span>High</span>
+                            </div>
                         </div>
-                        <div class="card-departments">
-                            <span class="dept-tag">TNEB: 156</span>
-                            <span class="dept-tag">Water: 98</span>
-                            <span class="dept-tag">Roads: 112</span>
-                            <span class="dept-tag">Health: 90</span>
+                    </div>
+                    <div class="heatmap-footer">
+                        <span class="hm-badge hm-high"><i class="fas fa-circle"></i> <span data-ta="அதிக ஆபத்து (1,245 நிலுவை)" data-en="High Risk (1,245 pending)">அதிக ஆபத்து (1,245 நிலுவை)</span></span>
+                        <span class="hm-badge hm-med"><i class="fas fa-circle"></i> <span data-ta="நடுத்தரம் (3,890 நடப்பு)" data-en="Medium (3,890 in progress)">நடுத்தரம் (3,890 நடப்பு)</span></span>
+                        <span class="hm-badge hm-low"><i class="fas fa-circle"></i> <span data-ta="தீர்க்கப்பட்டது (11,430)" data-en="Resolved (11,430)">தீர்க்கப்பட்டது (11,430)</span></span>
+                    </div>
+                </div>
+
+                <!-- Summary Stats Row -->
+                <div class="dash-stats-row">
+                    <div class="dash-stat-card">
+                        <div class="dash-stat-icon" style="background:#e3f2fd;"><i class="fas fa-file-alt" style="color:#1565c0;"></i></div>
+                        <span class="dash-stat-num" id="overview-total">37</span>
+                        <span class="dash-stat-lbl" data-ta="மொத்தம்" data-en="Total">மொத்தம்</span>
+                    </div>
+                    <div class="dash-stat-card">
+                        <div class="dash-stat-icon" style="background:#fce4ec;"><i class="fas fa-plus-circle" style="color:#c62828;"></i></div>
+                        <span class="dash-stat-num" id="overview-new">0</span>
+                        <span class="dash-stat-lbl" data-ta="இன்று புதிய" data-en="New Today">இன்று புதிய</span>
+                    </div>
+                    <div class="dash-stat-card">
+                        <div class="dash-stat-icon" style="background:#e8f5e9;"><i class="fas fa-check-circle" style="color:#2e7d32;"></i></div>
+                        <span class="dash-stat-num" id="overview-resolved">6</span>
+                        <span class="dash-stat-lbl" data-ta="மொத்த தீர்வு" data-en="Total Resolved">மொத்த தீர்வு</span>
+                    </div>
+                    <div class="dash-stat-card">
+                        <div class="dash-stat-icon" style="background:#e0f2f1;"><i class="fas fa-check-double" style="color:#00695c;"></i></div>
+                        <span class="dash-stat-num" id="overview-today-resolved">0</span>
+                        <span class="dash-stat-lbl" data-ta="இன்று தீர்வு" data-en="Resolved Today">இன்று தீர்வு</span>
+                    </div>
+                    <div class="dash-stat-card">
+                        <div class="dash-stat-icon" style="background:#fff3e0;"><i class="fas fa-clock" style="color:#e65100;"></i></div>
+                        <span class="dash-stat-num" id="overview-pending">11</span>
+                        <span class="dash-stat-lbl" data-ta="நிலுவை" data-en="Pending">நிலுவை</span>
+                    </div>
+                    <div class="dash-stat-card">
+                        <div class="dash-stat-icon" style="background:#ede7f6;"><i class="fas fa-users" style="color:#4527a0;"></i></div>
+                        <span class="dash-stat-num">48</span>
+                        <span class="dash-stat-lbl" data-ta="செயலில் தொண்டர்கள்" data-en="Active Volunteers">செயலில் தொண்டர்கள்</span>
+                    </div>
+                </div>
+
+                <!-- Weekly Resolution Graph -->
+                <div class="weekly-graph-section">
+                    <h3 class="section-title-new"><i class="fas fa-chart-line"></i> <span data-ta="வாராவாரி தீர்வு வரைபடம்" data-en="Weekly Resolution Graph">வாராவாரி தீர்வு வரைபடம்</span></h3>
+                    <div class="weekly-chart">
+                        <div class="chart-bar-group">
+                            <div class="chart-bar-wrapper">
+                                <span class="bar-value">18</span>
+                                <div class="chart-bar bar-filed" style="height:45%;"></div>
+                                <span class="bar-value-sm">10</span>
+                                <div class="chart-bar bar-resolved" style="height:25%;"></div>
+                            </div>
+                            <span class="chart-label" data-ta="திங்" data-en="Mon">திங்</span>
                         </div>
-                        <div class="card-alert"><i class="fas fa-bell"></i><span data-ta="3 புகார்கள் 48 மணி நேரத்திற்கு மேல் நிலுவையில்" data-en="3 complaints pending > 48 hours">3 புகார்கள் 48 மணி நேரத்திற்கு மேல் நிலுவையில்</span></div>
+                        <div class="chart-bar-group">
+                            <div class="chart-bar-wrapper">
+                                <span class="bar-value">24</span>
+                                <div class="chart-bar bar-filed" style="height:60%;"></div>
+                                <span class="bar-value-sm">14</span>
+                                <div class="chart-bar bar-resolved" style="height:35%;"></div>
+                            </div>
+                            <span class="chart-label" data-ta="செவ்" data-en="Tue">செவ்</span>
+                        </div>
+                        <div class="chart-bar-group">
+                            <div class="chart-bar-wrapper">
+                                <span class="bar-value">28</span>
+                                <div class="chart-bar bar-filed" style="height:70%;"></div>
+                                <span class="bar-value-sm">21</span>
+                                <div class="chart-bar bar-resolved" style="height:52%;"></div>
+                            </div>
+                            <span class="chart-label" data-ta="புத" data-en="Wed">புத</span>
+                        </div>
+                        <div class="chart-bar-group">
+                            <div class="chart-bar-wrapper">
+                                <span class="bar-value">21</span>
+                                <div class="chart-bar bar-filed" style="height:52%;"></div>
+                                <span class="bar-value-sm">18</span>
+                                <div class="chart-bar bar-resolved" style="height:45%;"></div>
+                            </div>
+                            <span class="chart-label" data-ta="வியா" data-en="Thu">வியா</span>
+                        </div>
+                        <div class="chart-bar-group">
+                            <div class="chart-bar-wrapper">
+                                <span class="bar-value">32</span>
+                                <div class="chart-bar bar-filed" style="height:80%;"></div>
+                                <span class="bar-value-sm">25</span>
+                                <div class="chart-bar bar-resolved" style="height:62%;"></div>
+                            </div>
+                            <span class="chart-label" data-ta="வெள்" data-en="Fri">வெள்</span>
+                        </div>
+                        <div class="chart-bar-group">
+                            <div class="chart-bar-wrapper">
+                                <span class="bar-value">5</span>
+                                <div class="chart-bar bar-filed" style="height:12%;"></div>
+                                <span class="bar-value-sm">3</span>
+                                <div class="chart-bar bar-resolved" style="height:8%;"></div>
+                            </div>
+                            <span class="chart-label" data-ta="சனி" data-en="Sat">சனி</span>
+                        </div>
+                    </div>
+                    <div class="chart-summary">
+                        <span data-ta="📊 இந்த வாரம் 142 தீர்வு | சராசரி 20/நாள்" data-en="📊 This week 142 resolved | Average 20/day">📊 இந்த வாரம் 142 தீர்வு | சராசரி 20/நாள்</span>
+                    </div>
+                </div>
+
+                <!-- Area-wise & Category-wise -->
+                <div class="area-category-row">
+                    <!-- Area-wise -->
+                    <div class="area-section">
+                        <h3 class="section-title-new"><i class="fas fa-map-pin"></i> <span data-ta="வட்டம் வாரியாக புகார்கள்" data-en="Area-wise Complaints">வட்டம் வாரியாக புகார்கள்</span></h3>
+                        <div class="area-bars">
+                            <div class="area-bar-item">
+                                <span class="area-bar-name">Tambaram East</span>
+                                <div class="area-bar-track"><div class="area-bar-fill" style="width:100%;background:#c62828;"></div></div>
+                                <span class="area-bar-num">287</span>
+                            </div>
+                            <div class="area-bar-item">
+                                <span class="area-bar-name">Selaiyur</span>
+                                <div class="area-bar-track"><div class="area-bar-fill" style="width:69%;background:#d32f2f;"></div></div>
+                                <span class="area-bar-num">198</span>
+                            </div>
+                            <div class="area-bar-item">
+                                <span class="area-bar-name">Mudichur</span>
+                                <div class="area-bar-track"><div class="area-bar-fill" style="width:61%;background:#e53935;"></div></div>
+                                <span class="area-bar-num">176</span>
+                            </div>
+                            <div class="area-bar-item">
+                                <span class="area-bar-name">Chromepet</span>
+                                <div class="area-bar-track"><div class="area-bar-fill" style="width:57%;background:#ef5350;"></div></div>
+                                <span class="area-bar-num">165</span>
+                            </div>
+                            <div class="area-bar-item">
+                                <span class="area-bar-name">Pallavaram</span>
+                                <div class="area-bar-track"><div class="area-bar-fill" style="width:50%;background:#f44336;"></div></div>
+                                <span class="area-bar-num">143</span>
+                            </div>
+                            <div class="area-bar-item">
+                                <span class="area-bar-name">Pammal</span>
+                                <div class="area-bar-track"><div class="area-bar-fill" style="width:42%;background:#ff5252;"></div></div>
+                                <span class="area-bar-num">121</span>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="constituency-card">
-                        <div class="card-header-row">
-                            <div>
-                                <h4>Madurai East</h4>
-                                <span class="card-mla">MLA: Thiru. Senthil Murugan</span>
+                    <!-- Category-wise -->
+                    <div class="category-section">
+                        <h3 class="section-title-new"><i class="fas fa-th-list"></i> <span data-ta="துறை வாரியாக பிரிவு" data-en="Category-wise Division">துறை வாரியாக பிரிவு</span></h3>
+                        <div class="category-list">
+                            <div class="category-item">
+                                <i class="fas fa-road" style="color:#c62828;"></i>
+                                <span class="cat-name" data-ta="சாலைகள்" data-en="Roads">சாலைகள்</span>
+                                <span class="cat-num">312</span>
+                                <div class="cat-bar" style="width:100%;background:#c62828;"></div>
                             </div>
-                            <span class="card-badge good">91.8%</span>
+                            <div class="category-item">
+                                <i class="fas fa-tint" style="color:#1565c0;"></i>
+                                <span class="cat-name" data-ta="குடிநீர்" data-en="Water">குடிநீர்</span>
+                                <span class="cat-num">245</span>
+                                <div class="cat-bar" style="width:78%;background:#1565c0;"></div>
+                            </div>
+                            <div class="category-item">
+                                <i class="fas fa-bolt" style="color:#f57c00;"></i>
+                                <span class="cat-name" data-ta="மின்சாரம்" data-en="Electricity">மின்சாரம்</span>
+                                <span class="cat-num">198</span>
+                                <div class="cat-bar" style="width:63%;background:#f57c00;"></div>
+                            </div>
+                            <div class="category-item">
+                                <i class="fas fa-heartbeat" style="color:#d32f2f;"></i>
+                                <span class="cat-name" data-ta="சுகாதாரம்" data-en="Health">சுகாதாரம்</span>
+                                <span class="cat-num">178</span>
+                                <div class="cat-bar" style="width:57%;background:#d32f2f;"></div>
+                            </div>
+                            <div class="category-item">
+                                <i class="fas fa-trash" style="color:#6a1b9a;"></i>
+                                <span class="cat-name" data-ta="கழிவு" data-en="Waste">கழிவு</span>
+                                <span class="cat-num">156</span>
+                                <div class="cat-bar" style="width:50%;background:#6a1b9a;"></div>
+                            </div>
                         </div>
-                        <div class="card-stats">
-                            <div class="card-stat"><span class="card-stat-number">389</span><span class="card-stat-label" data-ta="மொத்தம்" data-en="Total">மொத்தம்</span></div>
-                            <div class="card-stat"><span class="card-stat-number good">357</span><span class="card-stat-label" data-ta="தீர்வு" data-en="Resolved">தீர்வு</span></div>
-                            <div class="card-stat"><span class="card-stat-number warning">8</span><span class="card-stat-label" data-ta="நிலுவை" data-en="Pending">நிலுவை</span></div>
-                        </div>
-                        <div class="card-departments">
-                            <span class="dept-tag">TNEB: 89</span>
-                            <span class="dept-tag">Water: 134</span>
-                            <span class="dept-tag">Roads: 98</span>
-                            <span class="dept-tag">Health: 68</span>
-                        </div>
-                        <div class="card-alert"><i class="fas fa-bell"></i><span data-ta="2 புகார்கள் 48 மணி நேரத்திற்கு மேல் நிலுவையில்" data-en="2 complaints pending > 48 hours">2 புகார்கள் 48 மணி நேரத்திற்கு மேல் நிலுவையில்</span></div>
                     </div>
+                </div>
 
-                    <div class="constituency-card">
-                        <div class="card-header-row">
-                            <div>
-                                <h4>Coimbatore South</h4>
-                                <span class="card-mla">MLA: Thiru. Vijay Anand</span>
+                <!-- Department Performance -->
+                <div class="feature-section-card">
+                    <h3 class="section-title-new"><i class="fas fa-chart-bar"></i> <span data-ta="துறை செயல்திறன்" data-en="Department Performance">துறை செயல்திறன்</span></h3>
+                    <p class="feature-desc" data-ta="ஒவ்வொரு துறையின் பதில் விகிதம், SLA இணக்கம், நிலுவை vs தீர்வு புள்ளிவிவரங்களைக் கண்காணிக்கவும். மாதாந்திர போக்கு விளக்கப்படங்கள் சேர்க்கப்பட்டுள்ளன." data-en="Track each department's response rate, SLA compliance, pending vs resolved stats. Monthly trend charts included.">ஒவ்வொரு துறையின் பதில் விகிதம், SLA இணக்கம், நிலுவை vs தீர்வு புள்ளிவிவரங்களைக் கண்காணிக்கவும்.</p>
+                    <div class="dept-perf-grid">
+                        <div class="dept-perf-item">
+                            <div class="dept-perf-header"><i class="fas fa-bolt" style="color:#f57c00;"></i> TNEB</div>
+                            <div class="dept-perf-stats">
+                                <span class="dept-perf-stat"><b>89%</b> <small data-ta="பதில்" data-en="Response">பதில்</small></span>
+                                <span class="dept-perf-stat"><b>92%</b> <small>SLA</small></span>
+                                <span class="dept-perf-stat good"><b>156</b> <small data-ta="தீர்வு" data-en="Resolved">தீர்வு</small></span>
+                                <span class="dept-perf-stat warn"><b>12</b> <small data-ta="நிலுவை" data-en="Pending">நிலுவை</small></span>
                             </div>
-                            <span class="card-badge excellent">97.1%</span>
                         </div>
-                        <div class="card-stats">
-                            <div class="card-stat"><span class="card-stat-number">402</span><span class="card-stat-label" data-ta="மொத்தம்" data-en="Total">மொத்தம்</span></div>
-                            <div class="card-stat"><span class="card-stat-number good">390</span><span class="card-stat-label" data-ta="தீர்வு" data-en="Resolved">தீர்வு</span></div>
-                            <div class="card-stat"><span class="card-stat-number success">3</span><span class="card-stat-label" data-ta="நிலுவை" data-en="Pending">நிலுவை</span></div>
+                        <div class="dept-perf-item">
+                            <div class="dept-perf-header"><i class="fas fa-tint" style="color:#1565c0;"></i> <span data-ta="குடிநீர்" data-en="Water Board">குடிநீர்</span></div>
+                            <div class="dept-perf-stats">
+                                <span class="dept-perf-stat"><b>76%</b> <small data-ta="பதில்" data-en="Response">பதில்</small></span>
+                                <span class="dept-perf-stat"><b>81%</b> <small>SLA</small></span>
+                                <span class="dept-perf-stat good"><b>134</b> <small data-ta="தீர்வு" data-en="Resolved">தீர்வு</small></span>
+                                <span class="dept-perf-stat warn"><b>23</b> <small data-ta="நிலுவை" data-en="Pending">நிலுவை</small></span>
+                            </div>
                         </div>
-                        <div class="card-departments">
-                            <span class="dept-tag">TNEB: 102</span>
-                            <span class="dept-tag">Water: 87</span>
-                            <span class="dept-tag">Roads: 145</span>
-                            <span class="dept-tag">Health: 68</span>
+                        <div class="dept-perf-item">
+                            <div class="dept-perf-header"><i class="fas fa-road" style="color:#c62828;"></i> <span data-ta="சாலை" data-en="Highways">சாலை</span></div>
+                            <div class="dept-perf-stats">
+                                <span class="dept-perf-stat"><b>68%</b> <small data-ta="பதில்" data-en="Response">பதில்</small></span>
+                                <span class="dept-perf-stat"><b>72%</b> <small>SLA</small></span>
+                                <span class="dept-perf-stat good"><b>98</b> <small data-ta="தீர்வு" data-en="Resolved">தீர்வு</small></span>
+                                <span class="dept-perf-stat warn"><b>34</b> <small data-ta="நிலுவை" data-en="Pending">நிலுவை</small></span>
+                            </div>
                         </div>
-                        <div class="card-alert resolved"><i class="fas fa-check-circle"></i><span data-ta="அனைத்து அவசர புகார்களும் தீர்க்கப்பட்டன" data-en="All urgent complaints resolved">அனைத்து அவசர புகார்களும் தீர்க்கப்பட்டன</span></div>
+                        <div class="dept-perf-item">
+                            <div class="dept-perf-header"><i class="fas fa-heartbeat" style="color:#d32f2f;"></i> <span data-ta="சுகாதாரம்" data-en="Health">சுகாதாரம்</span></div>
+                            <div class="dept-perf-stats">
+                                <span class="dept-perf-stat"><b>82%</b> <small data-ta="பதில்" data-en="Response">பதில்</small></span>
+                                <span class="dept-perf-stat"><b>88%</b> <small>SLA</small></span>
+                                <span class="dept-perf-stat good"><b>90</b> <small data-ta="தீர்வு" data-en="Resolved">தீர்வு</small></span>
+                                <span class="dept-perf-stat warn"><b>8</b> <small data-ta="நிலுவை" data-en="Pending">நிலுவை</small></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Live Alerts -->
+                <div class="feature-section-card">
+                    <h3 class="section-title-new"><i class="fas fa-bell"></i> <span data-ta="நேரடி எச்சரிக்கைகள்" data-en="Live Alerts">நேரடி எச்சரிக்கைகள்</span></h3>
+                    <p class="feature-desc" data-ta="புதிய உயர்-முன்னுரிமை புகார்கள், SLA மீறல்கள், மற்றும் ஊடக-வைரல் பிரச்சினைகளுக்கான நிகழ்நேர எச்சரிக்கைகள்." data-en="Real-time alerts for new high-priority complaints, SLA breaches, and media-viral issues in the constituency.">புதிய உயர்-முன்னுரிமை புகார்கள், SLA மீறல்கள், மற்றும் ஊடக-வைரல் பிரச்சினைகளுக்கான நிகழ்நேர எச்சரிக்கைகள்.</p>
+                    <div class="live-alerts-list">
+                        <div class="alert-item alert-critical">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <div class="alert-content">
+                                <span class="alert-title" data-ta="🚨 SLA மீறல் - குடிநீர் புகார் #TN202410045" data-en="🚨 SLA Breach - Water Complaint #TN202410045">🚨 SLA மீறல் - குடிநீர் புகார் #TN202410045</span>
+                                <span class="alert-time">2 min ago • Chromepet</span>
+                            </div>
+                        </div>
+                        <div class="alert-item alert-high">
+                            <i class="fas fa-fire"></i>
+                            <div class="alert-content">
+                                <span class="alert-title" data-ta="🔥 ஊடக-வைரல்: சாலை குழி விபத்து - Selaiyur" data-en="🔥 Media-viral: Road pothole accident - Selaiyur">🔥 ஊடக-வைரல்: சாலை குழி விபத்து - Selaiyur</span>
+                                <span class="alert-time">15 min ago • 2.3K shares</span>
+                            </div>
+                        </div>
+                        <div class="alert-item alert-warning">
+                            <i class="fas fa-clock"></i>
+                            <div class="alert-content">
+                                <span class="alert-title" data-ta="⏰ 5 புகார்கள் 48hrs+ நிலுவை - TNEB" data-en="⏰ 5 complaints 48hrs+ pending - TNEB">⏰ 5 புகார்கள் 48hrs+ நிலுவை - TNEB</span>
+                                <span class="alert-time">30 min ago</span>
+                            </div>
+                        </div>
+                        <div class="alert-item alert-info">
+                            <i class="fas fa-info-circle"></i>
+                            <div class="alert-content">
+                                <span class="alert-title" data-ta="ℹ️ புதிய உயர்-முன்னுரிமை புகார் - Mudichur" data-en="ℹ️ New high-priority complaint - Mudichur">ℹ️ புதிய உயர்-முன்னுரிமை புகார் - Mudichur</span>
+                                <span class="alert-time">1 hr ago</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Constituent Reach -->
+                <div class="feature-section-card">
+                    <h3 class="section-title-new"><i class="fas fa-users"></i> <span data-ta="தொகுதி அணுகல்" data-en="Constituent Reach">தொகுதி அணுகல்</span></h3>
+                    <p class="feature-desc" data-ta="பதிவு செய்த மொத்த பயனர்கள், தாக்கல் செய்யப்பட்ட புகார்கள், தீர்க்கப்பட்டவை மற்றும் பின்தொடர் கருத்துக் கணிப்பிலிருந்து திருப்தி மதிப்பீடு." data-en="Total users registered, complaints filed, resolved and satisfaction rating from follow-up survey.">பதிவு செய்த மொத்த பயனர்கள், தாக்கல் செய்யப்பட்ட புகார்கள், தீர்க்கப்பட்டவை மற்றும் பின்தொடர் கருத்துக் கணிப்பிலிருந்து திருப்தி மதிப்பீடு.</p>
+                    <div class="reach-stats-grid">
+                        <div class="reach-stat"><i class="fas fa-user-plus" style="color:#1565c0;"></i><span class="reach-num">12,456</span><span class="reach-lbl" data-ta="பதிவு பயனர்கள்" data-en="Registered Users">பதிவு பயனர்கள்</span></div>
+                        <div class="reach-stat"><i class="fas fa-file-alt" style="color:#c62828;"></i><span class="reach-num">4,892</span><span class="reach-lbl" data-ta="புகார்கள் தாக்கல்" data-en="Complaints Filed">புகார்கள் தாக்கல்</span></div>
+                        <div class="reach-stat"><i class="fas fa-check-circle" style="color:#2e7d32;"></i><span class="reach-num">4,234</span><span class="reach-lbl" data-ta="தீர்க்கப்பட்டவை" data-en="Resolved">தீர்க்கப்பட்டவை</span></div>
+                        <div class="reach-stat"><i class="fas fa-star" style="color:#f57c00;"></i><span class="reach-num">4.2/5 ⭐</span><span class="reach-lbl" data-ta="திருப்தி மதிப்பீடு" data-en="Satisfaction Rating">திருப்தி மதிப்பீடு</span></div>
+                    </div>
+                </div>
+
+                <!-- Monthly Reports -->
+                <div class="feature-section-card">
+                    <h3 class="section-title-new"><i class="fas fa-calendar-alt"></i> <span data-ta="மாதாந்திர அறிக்கைகள்" data-en="Monthly Reports">மாதாந்திர அறிக்கைகள்</span></h3>
+                    <p class="feature-desc" data-ta="MLA அலுவலகத்திற்கு அனுப்பப்படும் தானியங்கி PDF அறிக்கைகள். முக்கிய சிக்கல்கள், தீர்வு விகிதம் மற்றும் துறை இடையிலான தாமதங்கள் உள்ளடக்கியது." data-en="Auto-generated PDF reports sent to MLA office. Includes top issues, resolution rate, and inter-department delays.">MLA அலுவலகத்திற்கு அனுப்பப்படும் தானியங்கி PDF அறிக்கைகள். முக்கிய சிக்கல்கள், தீர்வு விகிதம் மற்றும் துறை இடையிலான தாமதங்கள் உள்ளடக்கியது.</p>
+                    <div class="reports-list">
+                        <div class="report-item"><i class="fas fa-file-pdf" style="color:#c62828;"></i><span data-ta="ஜூன் 2026 - மாதாந்திர அறிக்கை" data-en="June 2026 - Monthly Report">ஜூன் 2026 - மாதாந்திர அறிக்கை</span><span class="report-badge new" data-ta="புதியது" data-en="New">புதியது</span></div>
+                        <div class="report-item"><i class="fas fa-file-pdf" style="color:#c62828;"></i><span data-ta="மே 2026 - மாதாந்திர அறிக்கை" data-en="May 2026 - Monthly Report">மே 2026 - மாதாந்திர அறிக்கை</span><span class="report-badge">PDF</span></div>
+                        <div class="report-item"><i class="fas fa-file-pdf" style="color:#c62828;"></i><span data-ta="ஏப்ரல் 2026 - மாதாந்திர அறிக்கை" data-en="April 2026 - Monthly Report">ஏப்ரல் 2026 - மாதாந்திர அறிக்கை</span><span class="report-badge">PDF</span></div>
+                    </div>
+                </div>
+
+                <!-- Ranking -->
+                <div class="feature-section-card">
+                    <h3 class="section-title-new"><i class="fas fa-trophy"></i> <span data-ta="தரவரிசை - MLA செயல்திறன்" data-en="Ranking - MLA Performance">தரவரிசை - MLA செயல்திறன்</span></h3>
+                    <p class="feature-desc" data-ta="அனைத்து 234 MLAக்களும் தொகுதி பிரச்சனை தீர்வு விகிதத்தின் அடிப்படையில் தரவரிசைப்படுத்தப்படுகின்றனர் — வெளிப்படையான பொது பொறுப்புக்கூறல் அளவீடு." data-en="All 234 MLAs ranked by constituency problem resolution rate — transparent public accountability metric.">அனைத்து 234 MLAக்களும் தொகுதி பிரச்சனை தீர்வு விகிதத்தின் அடிப்படையில் தரவரிசைப்படுத்தப்படுகின்றனர் — வெளிப்படையான பொது பொறுப்புக்கூறல் அளவீடு.</p>
+                    <div class="ranking-table">
+                        <div class="rank-row rank-header">
+                            <span>#</span><span data-ta="தொகுதி" data-en="Constituency">தொகுதி</span><span data-ta="அமைச்சர்" data-en="Minister">அமைச்சர்</span><span data-ta="துறை" data-en="Department">துறை</span>
+                        </div>
+                        <div class="rank-row rank-gold"><span>🥇 1</span><span>Perambur</span><span>C. Joseph Vijay</span><span class="rank-percent" style="font-size:0.6rem;">CM, Home, Police</span></div>
+                        <div class="rank-row rank-silver"><span>🥈 2</span><span>R.K. Nagar</span><span>N. Marie Wilson</span><span class="rank-percent" style="font-size:0.6rem;">Finance, Planning</span></div>
+                        <div class="rank-row rank-bronze"><span>🥉 3</span><span>Gobichettipalayam</span><span>K.A. Sengottaiyan</span><span class="rank-percent" style="font-size:0.6rem;">Revenue & Disaster</span></div>
+                        <div class="rank-row"><span>4</span><span>T. Nagar</span><span>N. Anand</span><span class="rank-percent" style="font-size:0.6rem;">Municipal & Water</span></div>
+                        <div class="rank-row"><span>5</span><span>Villivakkam</span><span>Aadhav Arjuna</span><span class="rank-percent" style="font-size:0.6rem;">Public Works, Sports</span></div>
+                        <div class="rank-row"><span>6</span><span>Tiruchengode</span><span>Dr. K.G. Arunraj</span><span class="rank-percent" style="font-size:0.6rem;">Health & Medical</span></div>
+                        <div class="rank-row"><span>7</span><span>Mylapore</span><span>P. Venkataramanan</span><span class="rank-percent" style="font-size:0.6rem;">Food & Civil Supplies</span></div>
+                        <div class="rank-row"><span>8</span><span>Thirupparankundram</span><span>C.T.R. Nirmal Kumar</span><span class="rank-percent" style="font-size:0.6rem;">Energy, Law, Prisons</span></div>
+                        <div class="rank-row"><span>9</span><span>Egmore</span><span>A. Rajmohan</span><span class="rank-percent" style="font-size:0.6rem;">Education & Tamil</span></div>
+                        <div class="rank-row"><span>10</span><span>Karaikudi</span><span>Dr. T.K. Prabhu</span><span class="rank-percent" style="font-size:0.6rem;">Natural Resources</span></div>
+                        <div class="rank-row"><span>11</span><span>Sivakasi</span><span>S. Keerthana</span><span class="rank-percent" style="font-size:0.6rem;">Industries & Commerce</span></div>
+                        <div class="rank-row"><span>12</span><span>Aranthangi</span><span>Mohamed Farvas</span><span class="rank-percent" style="font-size:0.6rem;">Labour & Skill Dev</span></div>
+                        <div class="rank-row"><span>13</span><span>Rajapalayam</span><span>K. Jegadeshwari</span><span class="rank-percent" style="font-size:0.6rem;">Women Welfare</span></div>
+                        <div class="rank-row"><span>14</span><span>Avinashi</span><span>S. Kamali</span><span class="rank-percent" style="font-size:0.6rem;">Animal Husbandry</span></div>
+                        <div class="rank-row"><span>15</span><span>Kumarapalayam</span><span>C. Vijayalakshmi</span><span class="rank-percent" style="font-size:0.6rem;">Dairy Development</span></div>
+                        <div class="rank-row"><span>16</span><span>Kumbakonam</span><span>Vinoth</span><span class="rank-percent" style="font-size:0.6rem;">Agriculture & Farmers</span></div>
+                        <div class="rank-row"><span>17</span><span>Thoothukudi</span><span>Srinath</span><span class="rank-percent" style="font-size:0.6rem;">Fisheries</span></div>
+                        <div class="rank-row"><span>18</span><span>Velachery</span><span>R. Kumar</span><span class="rank-percent" style="font-size:0.6rem;">AI & IT</span></div>
+                        <div class="rank-row"><span>19</span><span>Tambaram</span><span>D. Sarathkumar</span><span class="rank-percent" style="font-size:0.6rem;">Human Resources</span></div>
+                    </div>
+                </div>
+
+                <!-- Dashboard Footer -->
+                <div class="dash-footer">
+                    <div class="dash-footer-col">
+                        <h4>🏛️ <span data-ta="மக்கள் குறை தீர்ப்பு மேடை" data-en="Makkal Kurai Theerpu Medai">மக்கள் குறை தீர்ப்பு மேடை</span></h4>
+                        <p data-ta="தாம்பரம் தொகுதி MLA: D. Sarathkumar" data-en="Tambaram Constituency MLA: D. Sarathkumar">தாம்பரம் தொகுதி MLA: D. Sarathkumar</p>
+                        <p style="font-size:0.65rem;color:var(--text-muted-dark);" data-ta="அமைச்சர் - மனித வள மேலாண்மை துறை" data-en="Minister - Human Resources Management">அமைச்சர் - மனித வள மேலாண்மை துறை</p>
+                        <p style="color:var(--tvk-red);font-weight:600;" data-ta="தமிழக வெற்றி கழகம் (TVK) | CM: C. Joseph Vijay" data-en="Tamilaga Vettri Kazhagam (TVK) | CM: C. Joseph Vijay">தமிழக வெற்றி கழகம் (TVK) | CM: C. Joseph Vijay</p>
+                    </div>
+                    <div class="dash-footer-col">
+                        <h4 data-ta="இணைப்புகள்" data-en="Links">இணைப்புகள்</h4>
+                        <p data-ta="முகப்பு" data-en="Home">முகப்பு</p>
+                        <p data-ta="புகார் செய்" data-en="File Complaint">புகார் செய்</p>
+                        <p data-ta="நிலை காண" data-en="Track Status">நிலை காண</p>
+                    </div>
+                    <div class="dash-footer-col">
+                        <h4 data-ta="தொடர்பு" data-en="Contact">தொடர்பு</h4>
+                        <p>📞 +91 XXXXX XXXXX</p>
+                        <p>📧 mla.tambaram@tn.gov.in</p>
+                        <p>📍 Tambaram, Chennai</p>
                     </div>
                 </div>
             </div>
