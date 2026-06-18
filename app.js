@@ -905,8 +905,137 @@ async function sendUserMessage(){
     setTimeout(()=>{removeTypingIndicator();addMessage(currentLang==='ta'?'🙏 புதிய புகார்: "Hi" அனுப்புங்கள் | நிலை அறிய: Complaint ID (TN2024XXXXX) அனுப்புங்கள்':'🙏 New complaint: Send "Hi" | Track status: Send complaint ID (TN2024XXXXX)','incoming',true);},1000);
 }
 
+// ==================== SEED DEMO DATA ====================
+async function seedDemoData() {
+    // Check if already seeded
+    const check = await db.collection('mkkm_config').doc('demo_seeded').get();
+    if(check.exists) { console.log('✅ Demo data already seeded'); return; }
+    
+    const today = new Date();
+    const dayOfWeek = today.getDay();
+    const mondayOffset = dayOfWeek === 0 ? -6 : 1 - dayOfWeek;
+    const monday = new Date(today);
+    monday.setDate(today.getDate() + mondayOffset);
+    monday.setHours(9, 0, 0, 0);
+
+    const demoComplaints = [
+        // Monday - 18 filed, 10 resolved
+        ...generateDayComplaints(monday, 0, 18, 10),
+        // Tuesday - 24 filed, 14 resolved
+        ...generateDayComplaints(monday, 1, 24, 14),
+        // Wednesday - 28 filed, 21 resolved
+        ...generateDayComplaints(monday, 2, 28, 21),
+        // Thursday - 21 filed, 18 resolved
+        ...generateDayComplaints(monday, 3, 21, 18),
+        // Friday - 32 filed, 25 resolved
+        ...generateDayComplaints(monday, 4, 32, 25),
+        // Saturday - 5 filed, 3 resolved
+        ...generateDayComplaints(monday, 5, 5, 3),
+    ];
+
+    console.log(`🌱 Seeding ${demoComplaints.length} demo complaints...`);
+    
+    const batch_size = 20;
+    for(let i = 0; i < demoComplaints.length; i += batch_size) {
+        const batch = db.batch();
+        const chunk = demoComplaints.slice(i, i + batch_size);
+        chunk.forEach(c => {
+            batch.set(db.collection('mkkm_complaints').doc(c.id), c);
+        });
+        await batch.commit();
+    }
+    
+    // Update counter
+    const lastNum = 10000 + demoComplaints.length;
+    await db.collection('mkkm_config').doc('counter').set({ lastNumber: lastNum, updatedAt: new Date().toISOString() });
+    await db.collection('mkkm_config').doc('demo_seeded').set({ seededAt: new Date().toISOString(), count: demoComplaints.length });
+    
+    console.log(`✅ Seeded ${demoComplaints.length} demo complaints successfully!`);
+}
+
+function generateDayComplaints(monday, dayOffset, totalFiled, totalResolved) {
+    const day = new Date(monday);
+    day.setDate(monday.getDate() + dayOffset);
+    
+    const complaints = [];
+    const deptIds = ['tneb', 'water', 'roads', 'health', 'revenue'];
+    const districts = ['Chennai', 'Coimbatore', 'Madurai', 'Salem', 'Tiruchirappalli', 'Tirunelveli'];
+    const taluks = ['Tambaram', 'Chromepet', 'Pallavaram', 'Selaiyur', 'Mudichur', 'Pammal', 'Alandur', 'Sholinganallur'];
+    const titles_ta = ['சாலை பள்ளம்', 'குடிநீர் பிரச்சனை', 'மின்சாரம் தடை', 'சுகாதார பிரச்சனை', 'கழிவு அகற்றம்', 'தெரு விளக்கு பழுது', 'வடிகால் அடைப்பு', 'நீர் கசிவு'];
+    const titles_en = ['Road pothole', 'Water supply issue', 'Power outage', 'Health concern', 'Waste disposal', 'Street light repair', 'Drainage block', 'Water leakage'];
+    const names = ['Kumar', 'Lakshmi', 'Raj', 'Priya', 'Senthil', 'Meena', 'Arun', 'Divya', 'Mani', 'Kavitha', 'Ravi', 'Saranya', 'Vijay', 'Anitha', 'Ganesh'];
+
+    for(let i = 0; i < totalFiled; i++) {
+        const hour = 8 + Math.floor(Math.random() * 10);
+        const minute = Math.floor(Math.random() * 60);
+        const createdAt = new Date(day);
+        createdAt.setHours(hour, minute, 0, 0);
+        
+        const deptIdx = i % deptIds.length;
+        const dept = departments[deptIdx];
+        const district = districts[i % districts.length];
+        const taluk = taluks[i % taluks.length];
+        const titleIdx = i % titles_ta.length;
+        const name = names[i % names.length];
+        const mobile = '9' + String(Math.floor(Math.random() * 900000000) + 100000000);
+        
+        const isResolved = i < totalResolved;
+        const status = isResolved ? 'resolved' : (i < totalResolved + 3 ? 'in_progress' : (i < totalResolved + 6 ? 'acknowledged' : 'routed'));
+        
+        const id = `TN2024${10001 + dayOffset * 50 + i}`;
+        const assignedTo = `${dept.division} - ${district} Division`;
+        const assignedToTa = `${dept.divisionTa} - ${district} Division`;
+        
+        const timeline = [
+            { status: 'filed', time: createdAt.toLocaleString('en-IN', {day:'2-digit',month:'short',year:'numeric',hour:'numeric',minute:'2-digit',hour12:true}), note: '' },
+            { status: 'routed', time: createdAt.toLocaleString('en-IN', {day:'2-digit',month:'short',year:'numeric',hour:'numeric',minute:'2-digit',hour12:true}), note: `${assignedToTa}-க்கு ஒதுக்கப்பட்டது` }
+        ];
+        
+        if(status === 'acknowledged' || status === 'in_progress' || status === 'resolved') {
+            const ackTime = new Date(createdAt); ackTime.setHours(ackTime.getHours() + 2);
+            timeline.push({ status: 'acknowledged', time: ackTime.toLocaleString('en-IN', {day:'2-digit',month:'short',year:'numeric',hour:'numeric',minute:'2-digit',hour12:true}), note: 'அதிகாரி ஒப்புக்கொண்டார்' });
+        }
+        if(status === 'in_progress' || status === 'resolved') {
+            const ipTime = new Date(createdAt); ipTime.setHours(ipTime.getHours() + 6);
+            timeline.push({ status: 'in_progress', time: ipTime.toLocaleString('en-IN', {day:'2-digit',month:'short',year:'numeric',hour:'numeric',minute:'2-digit',hour12:true}), note: 'பணி தொடங்கப்பட்டது' });
+        }
+        if(status === 'resolved') {
+            const resTime = new Date(createdAt); resTime.setHours(resTime.getHours() + 12 + Math.floor(Math.random() * 12));
+            timeline.push({ status: 'resolved', time: resTime.toLocaleString('en-IN', {day:'2-digit',month:'short',year:'numeric',hour:'numeric',minute:'2-digit',hour12:true}), note: 'பிரச்சனை தீர்க்கப்பட்டது' });
+        }
+        
+        complaints.push({
+            id,
+            name,
+            mobile,
+            district,
+            taluk,
+            street: '',
+            pincode: '',
+            title: titles_ta[titleIdx],
+            description: titles_en[titleIdx] + ' reported in ' + taluk + ', ' + district,
+            department: dept.id,
+            departmentName: dept.nameEn,
+            departmentNameTa: dept.name,
+            assignedTo,
+            assignedToTa,
+            status,
+            imageURL: '',
+            voiceAttached: Math.random() > 0.7,
+            gpsLocation: `${(12.9 + Math.random() * 0.3).toFixed(4)}°N, ${(80.1 + Math.random() * 0.2).toFixed(4)}°E`,
+            createdAt: createdAt.toISOString(),
+            updatedAt: createdAt.toISOString(),
+            timeline
+        });
+    }
+    
+    return complaints;
+}
+
 // ==================== INIT ====================
 document.addEventListener('DOMContentLoaded',()=>{
     document.body.style.opacity='0';
     setTimeout(()=>{document.body.style.transition='opacity 0.4s';document.body.style.opacity='1';},50);
+    // Auto-seed demo data on first load
+    setTimeout(()=>{ seedDemoData(); }, 2000);
 });
