@@ -2118,7 +2118,7 @@ body {
 
 .rank-row {
     display: grid;
-    grid-template-columns: 50px 1fr 1fr 70px;
+    grid-template-columns: 50px 1fr 1fr 90px 65px;
     align-items: center;
     padding: 10px 12px;
     border-radius: 6px;
@@ -2147,6 +2147,15 @@ body {
     color: #2e7d32;
 }
 
+.rank-dept {
+    font-size: 0.6rem;
+    color: var(--text-muted-dark);
+}
+
+.rank-header .rank-dept {
+    color: white;
+}
+
 /* Responsive for feature sections */
 @media (max-width: 768px) {
     .dept-perf-grid {
@@ -2156,7 +2165,7 @@ body {
         grid-template-columns: repeat(2, 1fr);
     }
     .rank-row {
-        grid-template-columns: 40px 1fr 1fr 55px;
+        grid-template-columns: 35px 1fr 1fr 70px 50px;
         font-size: 0.65rem;
     }
 }
